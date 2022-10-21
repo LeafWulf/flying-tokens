@@ -20,6 +20,11 @@ If you opt to disable the automatic effect and prefer to enable per token you ju
 ***If you want to land your token just click the dove slashed icon and it will remove the filter effects, this wont change token elevation, as for example the token could land in a higher level. Then you can change the elevation and it won't apply effects anymore.***  
 ![functions2](readme/functions2.png)
 
+***Alternate Image For Flying Tokens***  
+Now it is possible to set a alternate token image that is automatic replaced when the token is flying.
+
+![tokenconfig](readme/tokenconfig.png)
+
 ### Effects included
 Shadow projection, token scale up or down depending on the altitude, small movements to simulate flight, Token Magic FX filter to simulate wind. In the next release it will be configurable.
 
@@ -40,13 +45,25 @@ Display a chat message with the token name and its new elevation.
 *Default: disabled.*  
 Display a notification with the token name and its new elevation.
 
-**Scale Token Based On Elevation**  
-*Default: active.*  
-increase token scale based on how high is its elevation.
+**Custom Scale**  
+*Default: 0.01.*  
+increase token scale based on how high is its elevation. Set to `0` if you want to disable it. 
 
 **Auto Zoom**  
 *Default: disabled.*  
 Zoom into the token when it lands, and out based on how high it is flying.
+
+**Enable Movement Effect**  
+*Default: enabled.*  
+Movement effect while the token is flying.
+
+**Enable Shadow Removal**  
+*Default: enabled.*  
+Remove the token image shadow and create a shadow that changes with its height and size.
+
+**Enable Wind Effect**  
+*Default: enabled.*  
+Small twist effect in the center of the token. 
 
 ![settings](readme/settings.png)
 
