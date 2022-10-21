@@ -71,8 +71,8 @@ export function registerSettings() {
         type: Number,
         range: {
             min: 0,
-            max: 0.02,
-            step: 0.001
+            max: 0.1,
+            step: 0.01
           },
         default: 0.01,
         restricted: true,

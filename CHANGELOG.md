@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.1]
+- adjustable scalability fix.
+
 ## [1.3.0]
 - New token scale formula, with adjustable pace.
 - Now the user can set a alternative image to replace when the token is flying.
