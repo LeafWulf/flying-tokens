@@ -175,8 +175,8 @@ async function flyZoom(token, elevation, minZoom = 3) {
     if (customScale) {
         let scale = await tokenScale(token, elevation)
         if (enableZoom) {
-            let x = token.x + game.scenes.viewed.data.size
-            let y = token.y + game.scenes.viewed.data.size
+            let x = token.x + game.scenes.viewed.data.grid.size
+            let y = token.y + game.scenes.viewed.data.grid.size
             let zoom = Math.min(3 / (Math.max(scale / 1.5, 1)), minZoom)
             await canvas.animatePan({ x: x, y: y, scale: zoom })
         }

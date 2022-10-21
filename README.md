@@ -77,7 +77,7 @@ So far none.
 If you have suggestions or want to report a problem, you can create an issue here: [Issues](../../issues)
 
 ## Changelog
-You can read the changelog here: [CHANGELOG.md](https://github.com/LeafWulf/flying-tokens/blob/master/CHANGELOG.md)
+You can read the changelog here: [CHANGELOG.md](/CHANGELOG.md)
 
 ## Special Thanks
 `Peterson`, `roi007leaf` and `Zhell`
