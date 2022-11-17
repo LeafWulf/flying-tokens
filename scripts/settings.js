@@ -83,7 +83,7 @@ export function registerSettings() {
 
     game.settings.register(MODULE, 'enableZoom', {
         name: 'Auto Zoom',
-        hint: `Change the zoom level based on the token scale, will only have effect if 'Scale Token Base On Elevation' is enabled.`,
+        hint: `Change the zoom level based on the token scale, will only have effect if 'Custom Scale' is bigger than 0.`,
         scope: 'world',
         config: true,
         type: Boolean,
@@ -121,7 +121,7 @@ export function registerSettings() {
     });
 
     game.settings.register(MODULE, 'optWind', {
-        name: 'Enable wind Effect',
+        name: 'Enable Wind Effect',
         hint: `Uncheck this to remove the small twist effect from the center of the token while it is flying. This setting will only affect tokens flying after the change, to apply to a token already flying you must land and fly again.`,
         scope: 'world',
         config: true,
