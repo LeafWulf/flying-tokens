@@ -27,7 +27,7 @@ Hooks.once('ready', async function () {
 function pf2eAutoScaleCheck(token, permanent = true) {
     let check;
     if (system == 'pf2e' && customScale) {
-        if (token) check = token.getFlag("pf2e", "linkToActorSize")
+        if (token) check = (fvttVersion < 10) ? token.document.getFlag("pf2e", "linkToActorSize") : token.document.getFlag("pf2e", "linkToActorSize")
         else check = game.settings.get('pf2e', 'tokens.autoscale')
         if (check) ui.notifications.warn('If you want Flying Tokens to autoscale you must disable PF2E setting "<b>Scale tokens according to size</b>" or individually disable this in the token config.', { permanent })
     }
@@ -115,8 +115,9 @@ Hooks.on("renderTokenConfig", (app, html, data) => {
 
 export function isFlyer(token) {
     if (enableForAll) return true;
-    let tokenFly = token.actor.data.data.attributes.movement.fly
-    if (tokenFly <= 0 || tokenFly == null) {
+    let tokenFly = (fvttVersion <= 10) ? token.actor?.data?.data?.attributes?.movement?.fly : token.actor?.system?.attributes?.movement?.fly;
+    if (system === 'demonlord') tokenFly = token.actor?.system?.speedtraits?.includes('flier');
+    if (tokenFly == undefined || tokenFly <= 0 || tokenFly == null) {
         let errorMessage = "This creature can't fly."
         // ui.notifications.error(errorMessage);
         console.log("Flying Token error: ", errorMessage)
@@ -145,8 +146,10 @@ export async function fly(token, elevation) {
         await token.setFlag(MODULE, "flying", true)
         await flyZoom(token, elevation)
         await flyingFX(token, elevation)
-        if (notificationOutput)
-            ui.notifications.info(token.data.name + ' is flying at <b>' + elevation + ' feet</b> high.')
+        if (notificationOutput) {
+            let tokenName = token.data?.name || token.name;
+            ui.notifications.info(tokenName + ' is flying at <b>' + elevation + ' feet</b> high.')
+        }
         if (chatOutput) {
             if (fvttVersion < 10) await chatMessage(`<img src='${token.data.img}' width='32' style='border:none'> ${token.data.name} is flying at <b>${elevation} feet</b> high.`)// compatible v9
             else await chatMessage(`<img src='${token.texture.src}' width='32' style='border:none'> ${token.name} is flying at <b>${elevation} feet</b> high.`)//compatible v10+
@@ -175,8 +178,14 @@ async function flyZoom(token, elevation, minZoom = 3) {
     if (customScale) {
         let scale = await tokenScale(token, elevation)
         if (enableZoom) {
-            let x = token.x + game.scenes.viewed.data.grid.size
-            let y = token.y + game.scenes.viewed.data.grid.size
+            let gridSize;
+            if (fvttVersion <= 10) {
+                gridSize = game.scenes.viewed.data.grid.size;
+            } else {
+                gridSize = game.scenes.viewed.grid.size;
+            }
+            let x = token.x + gridSize;
+            let y = token.y + gridSize;
             let zoom = Math.min(3 / (Math.max(scale / 1.5, 1)), minZoom)
             await canvas.animatePan({ x: x, y: y, scale: zoom })
         }
@@ -306,8 +315,15 @@ export async function land(token) {
     await flyingFX(token, 0);
     if (fvttVersion < 10) await token.update({ img: originalToken })// compatible v9
     else await token.update({ texture: { src: originalToken } }) //this is in a different line so the animation plays BEFORE the token is changed. compatible v10+
-    if (notificationOutput)
-        ui.notifications.info(token.data.name + ' <b> has landed</b>.')
+    if (notificationOutput) {
+        let tokenName;
+        if (fvttVersion <= 10) {
+            tokenName = token.data.name;
+        } else {
+            tokenName = token.name;
+        }
+        ui.notifications.info(tokenName + ' <b> has landed</b>.')
+    }
     if (chatOutput) {
         if (fvttVersion < 10) await chatMessage(`<img src='${token.data.img}' width='32' style='border:none'> ${token.data.name} <b> has landed</b>.`)// compatible v9
         else await chatMessage(`<img src='${token.texture.src}' width='32' style='border:none'> ${token.name}  <b> has landed</b>.`)//compatible v10+

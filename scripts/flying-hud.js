@@ -3,7 +3,7 @@ import { MODULE, MODULE_DIR } from "./const.js"; //import the const variables
 import { isFlyer, land, fly } from "./flying-tokens.js";
 
 /**
- * Functinality class for managing the token HUD
+ * Functionality class for managing the token HUD
  */
 export class FlyingHud {
 
@@ -16,7 +16,7 @@ export class FlyingHud {
      */
     static async renderHud(app, html, hudData) {
         let token = canvas.tokens.get(hudData._id)
-        let enableFlight = token.document.getFlag(MODULE, "enableFlight")
+        let enableFlight = token.document.getFlag(MODULE, "enableFlight") || false;
         if (isFlyer(token)) {
             if (enableFlight) {
                 this.addDisableButton(html, hudData)
